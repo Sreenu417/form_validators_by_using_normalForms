@@ -15,6 +15,29 @@ def check_for_len(value):
 
 class StudentForm(forms.Form):
     name=forms.CharField(max_length=100,validators=[check_for_b,check_for_len])
-    sid=forms.IntegerField()
+    #sid=forms.IntegerField()
     age=forms.IntegerField()
     email=forms.EmailField()
+    re_enter_emial=forms.EmailField()
+    botcatcher=forms.CharField(max_length=100,widget=forms.HiddenInput,required=False)
+
+
+    def clean(self):
+        e=self.cleaned_data["email"]
+        r=self.cleaned_data["re_enter_emial"]
+        if e!=r:
+            raise forms.ValidationError('not matched')
+        
+    #def clean_age(self):
+    #   a=self.cleaned_data["age"]
+    #    if a<6:
+    #       raise forms.ValidationError('age is less than 6')
+
+
+
+    def clean_botcatcher(self):
+        bot=self.cleaned_data['botcatcher']
+        if len(bot)>0:
+            raise forms.ValidationError('botcatchers are hacked your data base')
+
+        
