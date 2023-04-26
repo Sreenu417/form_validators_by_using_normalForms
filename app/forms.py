@@ -1,5 +1,5 @@
 from django import forms
-
+from django.core import validators
 
 
 
@@ -19,6 +19,7 @@ class StudentForm(forms.Form):
     age=forms.IntegerField()
     email=forms.EmailField()
     re_enter_emial=forms.EmailField()
+    mobile=forms.CharField(max_length=10,min_length=10,validators=[validators.RegexValidator('[6-9\d{9}]')])
     botcatcher=forms.CharField(max_length=100,widget=forms.HiddenInput,required=False)
 
 
